@@ -1,106 +1,109 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Météo</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Météo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
 
 
-    <style>
-      body {
-         font-family: "MuseoModerno", sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background: linear-gradient(135deg, #00feba, #5b548a);
-      }
+  <style>
+    body {
+      font-family: "MuseoModerno", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #00feba, #5b548a);
+    }
 
-      h1{
-        margin: 0 auto;
-        font-weight: bolder;
-        font-size: 1.5rem;
-      }
-      h2{
-        margin: 0px auto 10px;
-        font-weight: 500;
-        font-size: 1rem;
-      }
-      .container {
-        text-align: center;
-        background: white;
-        padding: 20px;
-        border-radius: 22px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-      input[type="text"] {
-        border-radius: 22px;
-        padding: 20px;
-        font-size: 1rem;
-        font-weight: lighter;
-        width: 80%;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        text-align: center;
-        
-      }
+    h1 {
+      margin: 0 auto;
+      font-weight: bolder;
+      font-size: 1.5rem;
+    }
 
-      button {
-        padding:  20px;
-        font-size: 1rem;
-        border: none;
-        background: linear-gradient(135deg, #5b548a, #00feba );
-        color: white;
-        font-weight: 700;
-        border-radius: 22px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #0056b3;
-      }
-      .result {
-        margin-top: 20px;
-        color: red;
-        font-style: italic;    
-        font-family: Arial, Helvetica, sans-serif;    
-}
-      
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1> 🌩️ Météo ☀️</h1>
-      <h2>Quels temps fait il ici</h2>
-      <input
-        type="text"
-        id="locationInput"
-        placeholder="Entrez votre code postal, une ville 🔎"
-      />
-      <button onclick="getWeather()">Obtenir la météo</button>
-      <div class="result" id="weatherResult"></div>
-    </div>
+    h2 {
+      margin: 0px auto 10px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
 
-    <script>
-      function getWeather() {
-        const location = document.getElementById("locationInput").value;
-        const apiKey = "5e102b3d924422dc77570617d21008c7"; // Clé API générée
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&lang=fr&appid=${apiKey}`;
+    .container {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 22px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        fetch(apiUrl)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error('Erreur dans la requête réseau');
-            }
-            return response.json();
-          })
-          .then((data) => {
-            if (data.cod === 200) {
-              const weather = `
+    input[type="text"] {
+      border-radius: 22px;
+      padding: 20px;
+      font-size: 1rem;
+      font-weight: lighter;
+      width: 80%;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      text-align: center;
+
+    }
+
+    button {
+      padding: 20px;
+      font-size: 1rem;
+      border: none;
+      background: linear-gradient(135deg, #5b548a, #00feba);
+      color: white;
+      font-weight: 700;
+      border-radius: 22px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .result {
+      margin-top: 20px;
+      color: red;
+      font-style: italic;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1> 🌩️ Météo ☀️</h1>
+    <h2>Quels temps fait il ici</h2>
+    <input type="text" id="locationInput" placeholder="Entrez votre code postal, une ville 🔎" />
+    <button onclick="getWeather()">Obtenir la météo</button>
+    <div class="result" id="weatherResult"></div>
+  </div>
+
+  <script>
+    function getWeather() {
+      const location = document.getElementById("locationInput").value;
+      const apiKey = "5e102b3d924422dc77570617d21008c7"; // Clé API générée
+      const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&lang=fr&appid=${apiKey}`;
+
+      fetch(apiUrl)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Erreur dans la requête réseau');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.cod === 200) {
+            const weather = `
 
                 <p>🌧️☁️⛅ ⛅</p>
                 <h2>${data.name}, ${data.sys.country}</h2>
@@ -109,18 +112,19 @@
                 <p>Humidité: ${data.main.humidity}%</p>
                 <p>Vent: ${data.wind.speed} m/s</p>
               `;
-              document.getElementById("weatherResult").innerHTML = weather;
-            } else {
-              document.getElementById("weatherResult").innerHTML = `<p>Ville ou code postal introuvable</p>`;
-            }
-          })
-          .catch((error) => {
-            console.error("Erreur:", error);
-            document.getElementById("weatherResult").innerHTML = `<p>il y a une Erreur semble-t-il, veuillez verifier</p>`;
-          });
-      }
+            document.getElementById("weatherResult").innerHTML = weather;
+          } else {
+            document.getElementById("weatherResult").innerHTML = `<p>Ville ou code postal introuvable</p>`;
+          }
+        })
+        .catch((error) => {
+          console.error("Erreur:", error);
+          document.getElementById("weatherResult").innerHTML = `<p>il y a une Erreur semble-t-il, veuillez verifier</p>`;
+        });
+    }
 
 
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
