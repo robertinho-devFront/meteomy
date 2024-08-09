@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Météo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        text-align: center;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        width: 80%;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .result {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Météo</h1>
+      <input
+        type="text"
+        id="locationInput"
+        placeholder="Entrez un code postal ou une ville"
+      />
+      <button onclick="getWeather()">Obtenir la météo</button>
+      <div class="result" id="weatherResult"></div>
+    </div>
+
+    <script>
+      function getWeather() {
+        const location = document.getElementById("locationInput").value;
+        const apiKey = "5e102b3d924422dc77570617d21008c7"; // Clé API générée
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&lang=fr&appid=${apiKey}`;
+
+        fetch(apiUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Erreur dans la requête réseau');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.cod === 200) {
+              const weather = `
+                <h2>${data.name}, ${data.sys.country}</h2>
+                <p>Température: ${data.main.temp}°C</p>
+                <p>Météo: ${data.weather[0].description}</p>
+                <p>Humidité: ${data.main.humidity}%</p>
+                <p>Vent: ${data.wind.speed} m/s</p>
+              `;
+              document.getElementById("weatherResult").innerHTML = weather;
+            } else {
+              document.getElementById("weatherResult").innerHTML = `<p>Ville ou code postal introuvable</p>`;
+            }
+          })
+          .catch((error) => {
+            console.error("Erreur:", error);
+            document.getElementById("weatherResult").innerHTML = `<p>Erreur lors de la récupération des données</p>`;
+          });
+      }
+    </script>
+  </body>
+</html>
