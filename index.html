@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Météo</title>
+  <title>Météo mee</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,11 +16,23 @@
     body {
       font-family: "MuseoModerno", sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      padding: 0 20px;
       margin: 0;
       background: linear-gradient(135deg, #00feba, #5b548a);
+    }
+    .title{
+      font-weight: bolder;
+      font-size: 2.33rem;
+      color: antiquewhite;
+    }
+    .signature{
+      font-weight: lighter;
+      font-size: 1rem;
+      color:beige;
     }
 
     h1 {
@@ -69,8 +81,19 @@
     button:hover {
       background-color: #0056b3;
     }
-
+    .city{
+      color: #1a1a1a;
+      font-weight: 700;
+      font-size: 1.33rem;
+    }
     .result {
+      margin-top: 20px;
+      color: #1a1a1a;
+      font-style: italic;
+      font-weight: 500;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .error {
       margin-top: 20px;
       color: red;
       font-style: italic;
@@ -80,6 +103,7 @@
 </head>
 
 <body>
+  <p class= "title">WEATHER API</p>
   <div class="container">
     <h1> 🌩️ Météo ☀️</h1>
     <h2>Quels temps fait il ici</h2>
@@ -87,7 +111,7 @@
     <button onclick="getWeather()">Obtenir la météo</button>
     <div class="result" id="weatherResult"></div>
   </div>
-
+  <p class="signature">par Robertinho </p>
   <script>
     function getWeather() {
       const location = document.getElementById("locationInput").value;
@@ -106,7 +130,7 @@
             const weather = `
 
                 <p>🌧️☁️⛅ ⛅</p>
-                <h2>${data.name}, ${data.sys.country}</h2>
+                <h2 class="city">${data.name}, ${data.sys.country}</h2>
                 <p>Température: ${data.main.temp}°C</p>
                 <p>Météo: ${data.weather[0].description}</p>
                 <p>Humidité: ${data.main.humidity}%</p>
@@ -119,7 +143,7 @@
         })
         .catch((error) => {
           console.error("Erreur:", error);
-          document.getElementById("weatherResult").innerHTML = `<p>il y a une Erreur semble-t-il, veuillez verifier</p>`;
+          document.getElementById("weatherResult").innerHTML = `<p class="error">il y a une Erreur semble-t-il, veuillez verifier</p>`;
         });
     }
 
